@@ -33,20 +33,10 @@ public class ELFApplication {
         elfFile.setElfHeader(new ParseELFHeader().getELFHeader(bytes, new Offset(0)));
         elfFile.setElfSectionStringTable(new ELFStringTable());
 
-        switch (elfParams.getOptional()){
-        case "-h":
-            System.out.println(elfFile.getElfHeader().toString());
-            break;
-        case "-s":
-            elfFile.setElfSectionHeader(new ParseELFSectionHeader().getELFSectionHeaders(bytes));
-            ELFInfoContainer.getElfFile().getElfSectionHeader().forEach(System.out :: println);
-
-        }
-
-        ELFHeader elfHeader = new ParseELFHeader().getELFHeader(bytes, new Offset(0));
+        ELFHeader elfHeader = elfFile.getElfHeader();
         switch (elfParams.getOptional()) {
             case "-h":
-                System.out.println(elfHeader.toString());
+                System.out.println(elfFile.getElfHeader().toString());
                 break;
             case "-p":
                 Integer numberOfProgramHeaders = elfHeader.getNumberOfProgramHeaders();
@@ -57,6 +47,10 @@ public class ELFApplication {
                             new Offset(startOfProgramHeaders + i * sizeOfProgramHeaders)));
                     System.out.println("=========================================");
                 }
+                break;
+            case "-s":
+                elfFile.setElfSectionHeader(new ParseELFSectionHeader().getELFSectionHeaders(bytes));
+                ELFInfoContainer.getElfFile().getElfSectionHeader().forEach(System.out :: println);
         }
     }
 }

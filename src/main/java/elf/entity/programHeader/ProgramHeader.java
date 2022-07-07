@@ -1,7 +1,7 @@
 package elf.entity.programHeader;
 
 import elf.entity.Offset;
-import elf.entity.stringtable.enums.PType;
+import elf.entity.programHeader.enums.PType;
 
 /**
  * @author qxm

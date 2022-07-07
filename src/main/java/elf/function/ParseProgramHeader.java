@@ -4,7 +4,7 @@ import elf.ELFUtils;
 import elf.entity.Offset;
 import elf.entity.header.ELFHeader;
 import elf.entity.programHeader.ProgramHeader;
-import elf.entity.stringtable.enums.PType;
+import elf.entity.programHeader.enums.PType;
 
 /**
  * @author qxm
