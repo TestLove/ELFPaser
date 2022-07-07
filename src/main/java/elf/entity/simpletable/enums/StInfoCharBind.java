@@ -8,14 +8,11 @@ package elf.entity.simpletable.enums;
  *
  **/
 public enum StInfoCharBind {
-    STB_LOCAL("局部符号在包含该符号定义的目标文件以外不可见。相同名\n" +
-            "称的局部符号可以存在于多个文件中，互不影响。"),
-    STB_GLOBAL("全局符号对所有将组合的目标文件都是可见的。一个文件中\n" +
-            "对某个全局符号的定义将满足另一个文件对相同全局符号的\n" +
-            "未定义引用。"),
-    STB_WEAK("弱符号与全局符号类似，不过他们的定义优先级比较低。"),
-    STB_LOPROC("处于这个范围的取值是保留给处理器专用语义的。"),
-    STB_HIPROC("处于这个范围的取值是保留给处理器专用语义的。");
+    STB_LOCAL("STB_LOCAL"),
+    STB_GLOBAL("STB_GLOBAL"),
+    STB_WEAK("STB_WEAK"),
+    STB_LOPROC("STB_LOPROC"),
+    STB_HIPROC("STB_HIPROC");
     String description;
 
     StInfoCharBind(String description) {
