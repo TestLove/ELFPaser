@@ -6,11 +6,10 @@ package elf.entity.section.enums;
  * @create 2022-07-05 11:07
  **/
 public enum ShFlag {
-    SHF_WRITE("节区包含进程执行过程中将可写的数据。"),
-    SHF_ALLOC("此节区在进程执行过程中占用内存。某些控制节区并不出现于目标\n" +
-            "文件的内存映像中，对于那些节区，此位应设置为 0。"),
-    SHF_EXECINSTR("节区包含可执行的机器指令"),
-    SHF_MASKPROC("所有包含于此掩码中的四位都用于处理器专用的语义。");
+    SHF_WRITE("SHF_WRITE"),
+    SHF_ALLOC("SHF_ALLOC" ),
+    SHF_EXECINSTR("SHF_EXECINSTR"),
+    SHF_MASKPROC("SHF_MASKPROC(");
     String description;
 
     ShFlag(String description) {
