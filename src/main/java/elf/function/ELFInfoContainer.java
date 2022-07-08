@@ -2,6 +2,7 @@ package elf.function;
 
 import elf.entity.ELFFile;
 import elf.entity.ELFStringTable;
+import elf.entity.section.ELFSectionHeader;
 
 /**
  * @author TestLove
@@ -33,6 +34,10 @@ public class ELFInfoContainer {
         return elfFile.getElfSectionStringTable();
     }
 
+    public static ELFStringTable getSymbolStringTable(){
+        return elfFile.getSymbolNameStringTable();
+    }
+
     public static int getELFSectionStringTableOffset(){
         return elfFile.getElfHeader().getSectionHeaderStringTableIndex();
     }
@@ -42,5 +47,9 @@ public class ELFInfoContainer {
 
     public static int getOffsetOfSectionHeader() {
         return elfFile.getElfHeader().getStartOfSectionHeaders();
+    }
+
+    public static ELFSectionHeader getSectionHeaderByName(String name) {
+        return elfFile.getElfSectionHeaders().getHeaderByName(name);
     }
 }

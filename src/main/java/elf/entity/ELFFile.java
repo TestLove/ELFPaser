@@ -2,6 +2,9 @@ package elf.entity;
 
 import elf.entity.header.ELFHeader;
 import elf.entity.section.ELFSectionHeader;
+import elf.entity.section.ELFSectionHeaders;
+import elf.entity.symboltable.SymbolTable;
+import elf.function.ELFInfoContainer;
 
 import java.util.List;
 
@@ -14,11 +17,33 @@ import java.util.List;
 public class ELFFile {
     private ELFHeader elfHeader;
 
-    private List<ELFSectionHeader> elfSectionHeader;
+    private ELFSectionHeaders elfSectionHeaders;
 
     private ELFStringTable elfStringTable ;
 
+    private ELFStringTable symbolNameStringTable ;
+
     private ELFSectionHeaderParams params;
+
+    private SymbolTable symbolTable;
+
+    public SymbolTable getSymbolTable() {
+        return symbolTable;
+    }
+
+    public ELFStringTable getSymbolNameStringTable() {
+        return symbolNameStringTable;
+    }
+
+    public void setSymbolNameStringTable(ELFStringTable symbolNameStringTable) {
+        this.symbolNameStringTable = symbolNameStringTable;
+    }
+
+    public void setSymbolTable(SymbolTable symbolTable) {
+        this.symbolTable = symbolTable;
+        symbolNameStringTable = new ELFStringTable(0,0,elfSectionHeaders.getOffsetByName(".strtab"));
+    }
+
     public ELFHeader getElfHeader() {
         return elfHeader;
     }
@@ -39,12 +64,12 @@ public class ELFFile {
         params.setSizeOfSectionHeader(elfHeader.getSizeOfSectionHeaders());
     }
 
-    public List<ELFSectionHeader> getElfSectionHeader() {
-        return elfSectionHeader;
+    public ELFSectionHeaders getElfSectionHeaders() {
+        return elfSectionHeaders;
     }
 
-    public void setElfSectionHeader(List<ELFSectionHeader> elfSectionHeader) {
-        this.elfSectionHeader = elfSectionHeader;
+    public void setElfSectionHeaders(ELFSectionHeaders elfSectionHeaders) {
+        this.elfSectionHeaders = elfSectionHeaders;
     }
 
     public ELFStringTable getElfSectionStringTable() {

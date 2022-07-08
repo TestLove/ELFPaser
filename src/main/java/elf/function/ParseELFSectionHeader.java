@@ -5,6 +5,7 @@ import elf.entity.ELFSectionHeaderParams;
 import elf.entity.Offset;
 import elf.entity.section.ELFSectionHeader;
 import elf.entity.ELFStringTable;
+import elf.entity.section.ELFSectionHeaders;
 import elf.entity.section.enums.ShFlag;
 import elf.entity.section.enums.ShType;
 
@@ -18,13 +19,13 @@ import java.util.List;
  * @Description: null
  */
 public class ParseELFSectionHeader {
-    public List<ELFSectionHeader> getELFSectionHeaders(byte[]bytes) {
+    public ELFSectionHeaders getELFSectionHeaders(byte[]bytes) {
         ELFSectionHeaderParams elfSectionHeaderParams = new ELFSectionHeaderParams();
         ELFSectionHeaderParams params = ELFInfoContainer.getElfFile().getParams();
-        List<ELFSectionHeader> elfSectionHeaderList = new ArrayList<>();
+        ELFSectionHeaders elfSectionHeaderList = ELFInfoContainer.getElfFile().getElfSectionHeaders();
         Integer sectionHeaderOffset = params.getSectionHeaderOffset();
         for (int i = 0; i < params.getNumOfSectionHeader(); i++) {
-            elfSectionHeaderList.add(getELFSectionHeader(ELFUtils.copyBytes(bytes,sectionHeaderOffset,params.getSizeOfSectionHeader())));
+            elfSectionHeaderList.addSectionHeader(getELFSectionHeader(ELFUtils.copyBytes(bytes,sectionHeaderOffset,params.getSizeOfSectionHeader())));
             sectionHeaderOffset+= params.getSizeOfSectionHeader();
         }
         return elfSectionHeaderList;

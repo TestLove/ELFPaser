@@ -12,9 +12,15 @@ import elf.function.ELFInfoContainer;
 public class ELFStringTable {
     private int start;
 
-    public ELFStringTable(){
-        int strSectionOffset= ELFInfoContainer.getOffsetOfSectionHeader()+ELFInfoContainer.getELFSectionStringTableOffset()*ELFInfoContainer.getSizeOfSectionHeader();
-        start = ELFUtils.byteToIntLSB(ELFUtils.copyBytes(ELFInfoContainer.getFileBytes(),strSectionOffset+16,4));
+    public ELFStringTable(int start,int offset,int target){
+        if(target == 0){
+            int strSectionOffset= start+offset;
+            this.start = ELFUtils.byteToIntLSB(ELFUtils.copyBytes(ELFInfoContainer.getFileBytes(),strSectionOffset+16,4));
+        }
+        else{
+            this.start = target;
+        }
+
     }
     public String getNameByIndex(int index){
         StringBuffer sb = new StringBuffer();

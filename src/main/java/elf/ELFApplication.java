@@ -4,11 +4,10 @@ import elf.entity.ELFFile;
 import elf.entity.ELFParams;
 import elf.entity.ELFStringTable;
 import elf.entity.Offset;
-import elf.function.ELFInfoContainer;
+import elf.entity.section.ELFSectionHeaders;
+import elf.entity.symboltable.SymbolTable;
+import elf.function.*;
 import elf.entity.header.ELFHeader;
-import elf.function.ParseELFHeader;
-import elf.function.ParseELFSectionHeader;
-import elf.function.ParseProgramHeader;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -31,7 +30,8 @@ public class ELFApplication {
         ELFInfoContainer.setElfFile(elfFile);
         ELFInfoContainer.setFileBytes(bytes);
         elfFile.setElfHeader(new ParseELFHeader().getELFHeader(bytes, new Offset(0)));
-        elfFile.setElfSectionStringTable(new ELFStringTable());
+        elfFile.setElfSectionStringTable(new ELFStringTable(ELFInfoContainer.getOffsetOfSectionHeader(),ELFInfoContainer.getELFSectionStringTableOffset()*ELFInfoContainer.getSizeOfSectionHeader(),0));
+        elfFile.setElfSectionHeaders(new ELFSectionHeaders());
 
         ELFHeader elfHeader = elfFile.getElfHeader();
         switch (elfParams.getOptional()) {
@@ -49,8 +49,13 @@ public class ELFApplication {
                 }
                 break;
             case "-s":
-                elfFile.setElfSectionHeader(new ParseELFSectionHeader().getELFSectionHeaders(bytes));
-                ELFInfoContainer.getElfFile().getElfSectionHeader().forEach(System.out :: println);
+                new ParseELFSectionHeader().getELFSectionHeaders(bytes);
+                ELFInfoContainer.getElfFile().getElfSectionHeaders().getHeaders().forEach(System.out :: println);
+            case "-sy":
+                new ParseELFSectionHeader().getELFSectionHeaders(bytes);
+                elfFile.setSymbolTable(new SymbolTable());
+                new ParseELFSymbolTable().getSymbolTable(bytes);
+                ELFInfoContainer.getElfFile().getSymbolTable().getSymbols().forEach(System.out :: println);
         }
     }
 }
